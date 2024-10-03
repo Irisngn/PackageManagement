@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Driver List</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Driver Name</th>
+          <th scope="col">Driver Department</th>
+          <th scope="col">Driver Licence</th>
+          <th scope="col">Is Active</th>
+          <th scope ="col">Created At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td>{{ driver.driver_name | uppercase }}</td>
+          <td>{{ driver.driver_department }}</td>
+          <td>{{ driver.driver_licence }}</td>
+          <td>{{ driver.driver_isActive ? 'Yes' : 'No' }}</td>
+          <td>{{ driver.driver_createdAt }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
