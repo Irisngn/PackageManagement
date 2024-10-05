@@ -1,1 +1,29 @@
-<p>update-driver works!</p>
+<div class = 'container'>
+    <h2>Update Driver</h2>
+    <div class="form-group">
+        <label for="driverId">Choose Driver ID</label>
+        <select id="driverId" [(ngModel)]="selectedDriverId" (change)="onDriverSelect()" class="form-control"
+        >
+          <option *ngFor="let driver of drivers" [value]="driver.driver_id">
+            {{ driver.driver_id }}
+          </option>
+        </select>
+    </div> 
+    <form (ngSubmit)="onSubmit()" #updateForm="ngForm">
+        <div class="form-group">
+            <label for="driverLicence">Driver Licence</label>
+            <input type="text" id="driverLicence" [(ngModel)]="driver.driver_licence" name="driver_licence" required class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="driverDepartment">Department</label>
+            <select id="driverDepartment" [(ngModel)]="driver.driver_department" name="driver_department" required class="form-control">
+              <option value="Food">Food</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Electronic">Electronic</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="!updateForm.form.valid">Update Driver</button>
+    </form>
+</div>

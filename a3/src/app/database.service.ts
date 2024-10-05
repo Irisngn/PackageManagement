@@ -32,4 +32,8 @@ export class DatabaseService {
   updateDriver(id: string, driver: any): Observable<any> {
     return this.http.put<any>(API_URL + '/drivers/' + id, driver, httpOptions);
   }
+  getDriverById(id: string): Observable<any> {
+    return this.http.get<any>(`${API_URL}/drivers/${id}`);
+  }
+  
 }

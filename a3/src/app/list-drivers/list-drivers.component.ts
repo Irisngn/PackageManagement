@@ -21,4 +21,10 @@ export class ListDriversComponent implements OnInit{
       this.drivers = data;
     });
   }
+  deleteDriver(id: string): void {
+    this.databaseService.deleteDriver(id).subscribe(() => {
+      this.fetchDrivers();
+    });
+  }
+
 }
