@@ -21,9 +21,9 @@ async function connectToDatabase(url) {
     }
 }
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:4200' }));  // Adjust as needed
+// app.use(cors({ origin: 'http://localhost:4200' }));  // Adjust as needed
 
-app.use(express.static('./dist/a3/browser'));
+app.use("/", express.static('./dist/a3/browser'));
 
 //Getting all drivers 
 app.get("/34065016/Iris/drivers", async (req, res) => {
