@@ -1,1 +1,39 @@
-<p>add-package works!</p>
+<div class="container">
+    <h2>Add Package</h2>
+    <form (ngSubmit)="onSubmit()" #packageForm="ngForm">
+      <div class="form-group">
+        <label for="packageTitle">Package Title</label>
+        <input type="text" id="packageTitle" [(ngModel)]="package.package_title" name="package_title" required class="form-control" minlength="3" maxlength="15" pattern="[A-Za-z0-9 ]+">
+      </div>
+  
+      <div class="form-group">
+        <label for="packageWeight">Package Weight</label>
+        <input type="number" id="packageWeight" [(ngModel)]="package.package_weight" name="package_weight" required class="form-control" min="0">
+      </div>
+  
+      <div class="form-group">
+        <label for="packageDestination">Package Destination</label>
+        <input type="text" id="packageDestination" [(ngModel)]="package.package_destination" name="package_destination" required class="form-control" minlength="3" maxlength="15">
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" [(ngModel)]="package.description" name="description" class="form-control" maxlength="30"></textarea>
+      </div>
+  
+      <div class="form-group form-check">
+        <input type="checkbox" id="isAllocated" [(ngModel)]="package.isAllocated" name="isAllocated" class="form-check-input">
+        <label for="isAllocated" class="form-check-label">Is Allocated</label>
+      </div>
+  
+      <div class="form-group">
+        <label for="assignedDriver">Assigned Driver</label>
+        <select id="assignedDriver" [(ngModel)]="package.driver_id" name="drvier_id" required class="form-control">
+            <option *ngFor="let driver of drivers" [value]="driver._id">{{ driver.driver_id }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="!packageForm.form.valid">Add Package</button>
+    </form>
+  </div>
+  

@@ -27,7 +27,7 @@ app.use(express.static('./dist/a3/browser'));
 
 //Getting all drivers 
 app.get("/34065016/Iris/drivers", async (req, res) => {
-    const allDrivers = await Driver.find({}).populate('assigned_packages');;
+    const allDrivers = await Driver.find({}).populate('assigned_packages');
     await updateCrudCounter('retrieve');
     res.json(allDrivers);
 });
@@ -56,10 +56,44 @@ app.post("/34065016/Iris/drivers", async (req, res) => {
 
 app.get("/34065016/Iris/drivers/:id", async (req, res) => {
     const driverId = req.params.id;
-    let drivers = await Driver.findById(driverId).populate('assigned_packages');;
-    await updateCrudCounter('retrieve');
-    res.json(drivers);
+
+    if (!driverId || !mongoose.Types.ObjectId.isValid(driverId)) {
+        return res.status(400).json({ message: 'Invalid or missing driver ID. Package does not have any assigned driver.' });
+    }
+    
+    try {
+        let driver = await Driver.findById(driverId).populate('assigned_packages');
+        if (!driver) {
+            return res.status(404).json({ message: 'This package does not have any assigned driver.' });
+        }
+
+        await updateCrudCounter('retrieve');
+        return res.json(driver);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error while retrieving the driver.' });
+    }
+});
+
+app.get("/34065016/Iris/package/:id", async (req, res) => {
+    const packageId = req.params.id;
+    console.log(req.params);
+    if (!packageId || !mongoose.Types.ObjectId.isValid(packageId)) {
+        return res.status(400).json({ message: 'Invalid or missing driver ID. Package does not have any assigned driver.' });
+    }
+    try {
+        let packages = await Package.findById(packageId).populate('assigned_driver');;
+        await updateCrudCounter('retrieve');
+        if (!packages) {
+            return res.status(404).json({ message: 'This driver does not have any assigned package.' });
+        }
+        res.json(packages);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error while retrieving the package.' });
+    }
 }),
+
 
 //update driver
 app.put("/34065016/Iris/drivers/:id", async (req,res) => {

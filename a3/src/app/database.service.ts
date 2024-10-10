@@ -35,5 +35,24 @@ export class DatabaseService {
   getDriverById(id: string): Observable<any> {
     return this.http.get<any>(`${API_URL}/drivers/${id}`);
   }
-  
+  //adding new package
+  createPackage(packages: any): Observable<any> {
+    return this.http.post<any>(API_URL + '/package', packages, httpOptions);
+  }
+   // Get all drivers
+  getPackages(): Observable<any[]> {
+    return this.http.get<any[]>(API_URL + '/package');
+  }
+  deletePackage(id: string): Observable<any> {
+    return this.http.delete<any>(API_URL + '/package/' + id, httpOptions);
+  }
+  updatePackage(id: string, packages: any): Observable<any> {
+    return this.http.put<any>(API_URL + '/package/' + id, packages, httpOptions);
+  }
+  getPackageById(id: string): Observable<any> {
+    return this.http.get<any>(`${API_URL}/package/${id}`);
+  }
+  getStatistics(): Observable<any> {
+    return this.http.get<any>(`${API_URL}/statistics`);
+  }
 }

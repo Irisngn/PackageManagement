@@ -13,13 +13,16 @@ import { ListPackagesComponent } from "./list-packages/list-packages.component";
 import { AddPackageComponent } from "./add-package/add-package.component";
 import { UpdatePackageComponent } from "./update-package/update-package.component";
 import { DeletePackageComponent } from "./delete-package/delete-package.component";
+import { WeightPipe } from './weight.pipe';
+import { CustomUppercasePipe } from './custom-uppercase.pipe';  
+import { FormatDateTimePipe } from './format-date-time.pipe';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, HeaderComponent, FooterComponent, HomeComponent, ListDriversComponent, AddDriverComponent, UpdateDriverComponent, DeleteDriverComponent, ListPackagesComponent, AddPackageComponent, DeletePackageComponent, UpdatePackageComponent],
+  imports: [RouterOutlet, CommonModule, RouterLink, HeaderComponent, FooterComponent, HomeComponent, ListDriversComponent, AddDriverComponent, UpdateDriverComponent, ListPackagesComponent, AddPackageComponent, DeletePackageComponent, UpdatePackageComponent, WeightPipe, DeleteDriverComponent, CustomUppercasePipe, FormatDateTimePipe],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'a3';

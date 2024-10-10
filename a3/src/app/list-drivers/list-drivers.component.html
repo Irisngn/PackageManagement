@@ -15,15 +15,53 @@
       <tbody>
         <tr *ngFor="let driver of drivers">
           <td> {{driver.driver_id}} </td>
-          <td>{{ driver.driver_name | uppercase }}</td>
+          <td> {{ driver.driver_name | customUppercase }}</td>
           <td>{{ driver.driver_department }}</td>
           <td>{{ driver.driver_licence }}</td>
           <td>{{ driver.driver_isActive ? 'Yes' : 'No' }}</td>
-          <td>{{ driver.driver_createdAt }}</td>
+          <td>{{ driver.driver_createdAt | formatDateTime }}</td>
           <td>
             <button class = "btn btn-danger" (click)= "deleteDriver(driver._id)">Delete</button>
+            <ng-container *ngIf="driver.assigned_packages?.length > 0; else noPackage">
+              <ul>
+                <li *ngFor="let package of driver.assigned_packages">
+                  <button class="btn btn-info btn-sm ml-2" (click)="showPackageDetails(package._id)">
+                    Show Package
+                  </button>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #noPackage>No assigned package</ng-template>
           </td>
         </tr>
       </tbody>
     </table>
+    <div *ngIf="selectedPackage" class="mt-4">
+      <h3>Package Details</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Package ID</th>
+            <th>Package Title</th>
+            <th>Package Weight</th>
+            <th>Package Destination</th>
+            <th>Package Description</th>
+            <th>Created At</th>
+            <th>Is Allocated</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ selectedPackage.package_id }}</td>
+            <td>{{ selectedPackage.package_title }}</td>
+            <td>{{ selectedPackage.package_weight }}</td>
+            <td>{{ selectedPackage.package_destination }}</td>
+            <td>{{ selectedPackage.description }}</td>
+            <td>{{ selectedPackage.createdAt }}</td>
+            <td>{{ selectedPackage.isAllocated }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>

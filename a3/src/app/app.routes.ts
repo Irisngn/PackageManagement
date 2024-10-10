@@ -9,6 +9,7 @@ import { ListPackagesComponent } from "./list-packages/list-packages.component";
 import { AddPackageComponent } from "./add-package/add-package.component";
 import { UpdatePackageComponent } from "./update-package/update-package.component";
 import { DeletePackageComponent } from "./delete-package/delete-package.component";
+import { StatisticsComponent } from "./statistics/statistics.component";
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },    
@@ -22,6 +23,8 @@ export const routes: Routes = [
     { path: 'list-packages', component: ListPackagesComponent },
     { path: 'update-package', component: UpdatePackageComponent }, 
     { path: 'delete-package', component: DeletePackageComponent},
+    { path: 'statistics', component: StatisticsComponent},
+    
     { path:'**', component: PageNotFoundComponent},
 ];
 

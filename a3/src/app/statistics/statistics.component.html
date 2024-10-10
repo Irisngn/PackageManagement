@@ -1,0 +1,55 @@
+<div class="container">
+    <h2>Statistics</h2>
+    
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Statistic</th>
+          <th scope="col">Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Total Drivers -->
+        <tr>
+          <td>Total Drivers</td>
+          <td>{{ stats.driverCount || 0 }}</td>
+        </tr>
+  
+        <!-- Total Packages -->
+        <tr>
+          <td>Total Packages</td>
+          <td>{{ stats.packageCount || 0 }}</td>
+        </tr>
+  
+        <!-- CRUD Operations Heading -->
+        <tr class="table-active">
+          <th colspan="2">CRUD Operations</th>
+        </tr>
+  
+        <!-- Inserts -->
+        <tr>
+          <td>Inserts</td>
+          <td>{{ stats.insert || 0 }}</td>
+        </tr>
+  
+        <!-- Retrieves -->
+        <tr>
+          <td>Retrieves</td>
+          <td>{{ stats.retrieve || 0 }}</td>
+        </tr>
+  
+        <!-- Updates -->
+        <tr>
+          <td>Updates</td>
+          <td>{{ stats.update || 0 }}</td>
+        </tr>
+  
+        <!-- Deletes -->
+        <tr>
+          <td>Deletes</td>
+          <td>{{ stats.delete || 0 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
