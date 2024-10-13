@@ -285,7 +285,7 @@ app.get("/34065016/Iris/api/v1/package", async (req, res) => {
     res.json(packages);
 });
 
-app.delete("/34065016/Iris/package/api/v1/:id", async function (req, res) {
+app.delete("/34065016/Iris/api/v1/package/:id", async function (req, res) {
     let packageID = req.params.id;  
     let deletedPackage = await Package.findById(packageID);
     
