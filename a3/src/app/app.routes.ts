@@ -10,20 +10,32 @@ import { AddPackageComponent } from "./add-package/add-package.component";
 import { UpdatePackageComponent } from "./update-package/update-package.component";
 import { DeletePackageComponent } from "./delete-package/delete-package.component";
 import { StatisticsComponent } from "./statistics/statistics.component";
+import { TextToSpeechComponent } from "./text-to-speech/text-to-speech.component";
+import { TranslateDescComponent } from "./translate-desc/translate-desc.component";
+import { CalculateDistanceComponent } from "./calculate-distance/calculate-distance.component";
+import { AuthGuard } from './auth.guard';
+import { LogInComponent } from "./log-in/log-in.component";
+import { SignUpComponent } from "./sign-up/sign-up.component";
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '', redirectTo: '/sign-up', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },    
 
-    { path: 'add-driver', component: AddDriverComponent },
-    { path: 'list-drivers', component: ListDriversComponent },
-    { path: 'update-driver', component: UpdateDriverComponent }, 
-    { path: 'delete-driver', component: DeleteDriverComponent},
+    { path: 'log-in', component: LogInComponent },
+    { path: 'sign-up', component: SignUpComponent },
+    { path: 'add-driver', component: AddDriverComponent, canActivate: [AuthGuard] },
+    { path: 'list-drivers', component: ListDriversComponent, canActivate: [AuthGuard] },
+    { path: 'update-driver', component: UpdateDriverComponent, canActivate: [AuthGuard] }, 
+    { path: 'delete-driver', component: DeleteDriverComponent, canActivate: [AuthGuard]},
 
-    { path: 'add-package', component: AddPackageComponent },
-    { path: 'list-packages', component: ListPackagesComponent },
-    { path: 'update-package', component: UpdatePackageComponent }, 
-    { path: 'delete-package', component: DeletePackageComponent},
-    { path: 'statistics', component: StatisticsComponent},
+    { path: 'add-package', component: AddPackageComponent,canActivate: [AuthGuard] },
+    { path: 'list-packages', component: ListPackagesComponent,canActivate: [AuthGuard]},
+    { path: 'update-package', component: UpdatePackageComponent, canActivate: [AuthGuard] }, 
+    { path: 'delete-package', component: DeletePackageComponent, canActivate: [AuthGuard]},
+    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard]},
+    {path: 'text-to-speech', component: TextToSpeechComponent, canActivate: [AuthGuard]},
+    {path: 'translate-desc', component: TranslateDescComponent, canActivate: [AuthGuard]},
+    {path: 'calculate-distance', component: CalculateDistanceComponent, canActivate: [AuthGuard]},
+
     
     { path:'**', component: PageNotFoundComponent},
 ];

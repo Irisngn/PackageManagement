@@ -1,0 +1,26 @@
+<div>
+    <h2>Drivers</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Driver ID</th>
+          <th>Licence</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td>{{ driver.driver_id }}</td>
+          <td>{{ driver.driver_licence }}</td>
+          <td>
+            <button (click)="playLicence(driver.driver_licence)">Play Licence</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <audio id = "file-audio" *ngIf="audioUrl" controls>
+      <source [src]="audioUrl" type="audio/mpeg">
+    </audio>
+  </div>
+  

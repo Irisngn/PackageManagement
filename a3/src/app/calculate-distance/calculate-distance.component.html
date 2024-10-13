@@ -1,0 +1,27 @@
+<div class="container">
+    <h2> Calculating Distance</h2>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Package ID</th>
+          <th>Destination</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let package of packages">
+          <td>{{ package.package_id }}</td>
+          <td>{{ package.package_destination }}</td>
+          <td>
+            <button (click)="calculateDistance(package.package_destination)">
+              Calculate Distance
+            </button>
+            <div *ngIf="distances[package.package_destination]">
+              Distance: {{ distances[package.package_destination] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

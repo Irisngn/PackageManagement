@@ -16,11 +16,12 @@ import { DeletePackageComponent } from "./delete-package/delete-package.componen
 import { WeightPipe } from './weight.pipe';
 import { CustomUppercasePipe } from './custom-uppercase.pipe';  
 import { FormatDateTimePipe } from './format-date-time.pipe';
-
+import { LogInComponent } from './log-in/log-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, RouterLink, HeaderComponent, FooterComponent, HomeComponent, ListDriversComponent, AddDriverComponent, UpdateDriverComponent, ListPackagesComponent, AddPackageComponent, DeletePackageComponent, UpdatePackageComponent, WeightPipe, DeleteDriverComponent, CustomUppercasePipe, FormatDateTimePipe],
+  imports: [RouterOutlet, CommonModule, RouterLink, HeaderComponent, FooterComponent, HomeComponent, ListDriversComponent, AddDriverComponent, UpdateDriverComponent, ListPackagesComponent, AddPackageComponent, DeletePackageComponent, UpdatePackageComponent, WeightPipe, DeleteDriverComponent, CustomUppercasePipe, FormatDateTimePipe, LogInComponent, SignUpComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
