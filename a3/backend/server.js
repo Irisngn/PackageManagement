@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
         await writeFile(fileName, response.audioContent, 'binary');
         console.log(`Audio written to file: ${fileName}`);
 
-        socket.emit('audio-url', { audioUrl: `http://localhost:8080/${licence}.mp3` });
+        socket.emit('audio-url', { audioUrl: `/${licence}.mp3` });
       } catch (error) {
         console.error('Error ', error);
         socket.emit('audio-url', { audioUrl: 'Error generating speech' });
