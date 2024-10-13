@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
 
 // Constants
 const PORT_NUMBER = 8080;
-const MONGO_URL = "mongodb://localhost:27017/A3FIT2095";
+const MONGO_URL = "mongodb://10.192.0.4:27017/A3FIT2095";
 
 async function connectToDatabase(url) {
     try {
