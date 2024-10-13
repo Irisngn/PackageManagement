@@ -16,9 +16,10 @@ import { CalculateDistanceComponent } from "./calculate-distance/calculate-dista
 import { AuthGuard } from './auth.guard';
 import { LogInComponent } from "./log-in/log-in.component";
 import { SignUpComponent } from "./sign-up/sign-up.component";
+import { InvalidDataComponent } from "./invalid-data/invalid-data.component";
 export const routes: Routes = [
     { path: '', redirectTo: '/sign-up', pathMatch: 'full' },
-    { path: 'home', component: HomeComponent },    
+    { path: 'home', component: HomeComponent,  canActivate: [AuthGuard]  },    
 
     { path: 'log-in', component: LogInComponent },
     { path: 'sign-up', component: SignUpComponent },
@@ -35,6 +36,7 @@ export const routes: Routes = [
     {path: 'text-to-speech', component: TextToSpeechComponent, canActivate: [AuthGuard]},
     {path: 'translate-desc', component: TranslateDescComponent, canActivate: [AuthGuard]},
     {path: 'calculate-distance', component: CalculateDistanceComponent, canActivate: [AuthGuard]},
+    {path: 'invalid-data', component: InvalidDataComponent},
 
     
     { path:'**', component: PageNotFoundComponent},

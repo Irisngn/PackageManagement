@@ -77,22 +77,24 @@ io.on('connection', (socket) => {
       }
     });
     socket.on('translate-description', async (data) => {
-        const { description } = data;
-        const targetLanguages = ['vi', 'ar', 'zh'];
+        const { description, targetLanguage } = data;
+        if (description == null || description.trim() === '') {
+            console.error('Description is null or empty.');
+            socket.emit('translation-result', { error: 'Cannot translate empty description.' });
+            return;
+        }    
         try {
-            const translations = {};
-            
-            for (const language of targetLanguages) {
-              const [translation] = await translateClient.translate(description, language);
-              translations[language] = translation; 
-            }
+            const [translation] = await translateClient.translate(description, targetLanguage);
+            const translations = {
+              [targetLanguage]: translation
+            };
             
             console.log(translations);
             socket.emit('translation-result', { translations });
             
           } catch (error) {
             console.error('Error in translate-description:', error);
-            socket.emit('translation-result', { translatedText: 'Error translating description' });
+            socket.emit('translation-result', { translations: { [targetLanguage]: 'Error translating description' } });
           }
     });
     socket.on('calculate-distance', async(data) => {
@@ -142,14 +144,14 @@ app.use("/", express.static('./dist/a3/browser'));
 app.use("/", express.static('./public'));
 
 //Getting all drivers 
-app.get("/34065016/Iris/drivers", async (req, res) => {
+app.get("/34065016/Iris/api/v1/drivers", async (req, res) => {
     const allDrivers = await Driver.find({}).populate('assigned_packages');
     await updateCrudCounter('retrieve');
     res.json(allDrivers);
 });
 
 //Adding new driver
-app.post("/34065016/Iris/drivers", async (req, res) => {
+app.post("/34065016/Iris/api/v1/drivers", async (req, res) => {
     let aDriver = new Driver({
         driver_name: req.body.driver_name,
         driver_department: req.body.driver_department,
@@ -170,7 +172,7 @@ app.post("/34065016/Iris/drivers", async (req, res) => {
     });
 }),
 
-app.get("/34065016/Iris/drivers/:id", async (req, res) => {
+app.get("/34065016/Iris/api/v1/drivers/:id", async (req, res) => {
     const driverId = req.params.id;
 
     if (!driverId || !mongoose.Types.ObjectId.isValid(driverId)) {
@@ -191,7 +193,7 @@ app.get("/34065016/Iris/drivers/:id", async (req, res) => {
     }
 });
 
-app.get("/34065016/Iris/package/:id", async (req, res) => {
+app.get("/34065016/Iris/api/v1/package/:id", async (req, res) => {
     const packageId = req.params.id;
     console.log(req.params);
     if (!packageId || !mongoose.Types.ObjectId.isValid(packageId)) {
@@ -212,7 +214,7 @@ app.get("/34065016/Iris/package/:id", async (req, res) => {
 
 
 //update driver
-app.put("/34065016/Iris/drivers/:id", async (req,res) => {
+app.put("/34065016/Iris/api/v1/drivers/:id", async (req,res) => {
     let updatedDriver = await Driver.findByIdAndUpdate(
         req.params.id,  
         { 
@@ -232,7 +234,7 @@ app.put("/34065016/Iris/drivers/:id", async (req,res) => {
 
 
 //delete driver
-app.delete("/34065016/Iris/drivers/:id", async (req,res)=> {
+app.delete("/34065016/Iris/api/v1/drivers/:id", async (req,res)=> {
     const driver = await Driver.findByIdAndDelete(req.params.id);
     const driverCount = await Driver.countDocuments();
     const statsDocRef = db.collection('data').doc('stats');
@@ -247,7 +249,7 @@ app.delete("/34065016/Iris/drivers/:id", async (req,res)=> {
 
 //package
 //Adding new package with authentication check
-app.post("/34065016/Iris/package", async (req, res) => {
+app.post("/34065016/Iris/api/v1/package", async (req, res) => {
     let aPackage = new Package({
         package_title: req.body.package_title,
         package_weight: parseInt(req.body.package_weight),
@@ -277,13 +279,13 @@ app.post("/34065016/Iris/package", async (req, res) => {
 });
 
 //listing package
-app.get("/34065016/Iris/package", async (req, res) => {
+app.get("/34065016/Iris/api/v1/package", async (req, res) => {
     let packages = await Package.find().populate('assigned_driver');
     await updateCrudCounter('retrieve');
     res.json(packages);
 });
 
-app.delete("/34065016/Iris/package/:id", async function (req, res) {
+app.delete("/34065016/Iris/package/api/v1/:id", async function (req, res) {
     let packageID = req.params.id;  
     let deletedPackage = await Package.findById(packageID);
     
@@ -307,7 +309,7 @@ app.delete("/34065016/Iris/package/:id", async function (req, res) {
     res.status(200).json({ message: "Package deleted successfully", result });
 });
 
-app.put("/34065016/Iris/package/:id", async function (req, res) {
+app.put("/34065016/Iris/package/api/v1/:id", async function (req, res) {
     try {
         let updatePackage = await Package.findByIdAndUpdate(
             req.params.id,  
@@ -326,7 +328,7 @@ app.put("/34065016/Iris/package/:id", async function (req, res) {
         res.status(500).json({ message: "Error in update package", error });
     }
 });
-app.get('/34065016/Iris/statistics', async (req, res) => {
+app.get('/34065016/Iris/api/v1/statistics', async (req, res) => {
     try {
         const statsDocRef = db.collection('data').doc('stats');
         const statsDoc = await statsDocRef.get();

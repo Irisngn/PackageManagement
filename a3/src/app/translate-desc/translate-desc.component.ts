@@ -3,11 +3,11 @@ import { io } from 'socket.io-client';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DatabaseService } from '../database.service';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-translate-desc',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './translate-desc.component.html',
   styleUrl: './translate-desc.component.css'
 })
@@ -23,15 +23,24 @@ export class TranslateDescComponent implements OnInit {
     })
     this.socket = io(); 
     this.socket.on('translation-result', (data: any) => {
-      console.log(data.translations);
-      this.translations = data.translations;
-    });
-  };
-  translateDesc(description: string): void{
-    const payload = { description};
+      if (data.error) {
+          alert(data.error);  
+      } else {
+          this.translations = data.translations;
+      }
+  });
+  }  
+  translateDesc(pkg: any): void {
+    if (!pkg.selectedLanguage) {
+      alert('Please select a language to translate the description.');
+      return;
+    }
+
+    const payload = {
+      description: pkg.description,
+      targetLanguage: pkg.selectedLanguage
+    };
+
     this.socket.emit('translate-description', payload);
-
   }
-
-
 }

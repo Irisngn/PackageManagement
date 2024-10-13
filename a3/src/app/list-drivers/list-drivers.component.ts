@@ -14,6 +14,7 @@ import { WeightPipe } from '../weight.pipe';
 export class ListDriversComponent implements OnInit{
   drivers: any[] = [];
   selectedPackage: any = null;
+  selectedDriverPackages: any[] = [];
 
   constructor(private databaseService: DatabaseService) { }
 
@@ -26,11 +27,13 @@ export class ListDriversComponent implements OnInit{
       this.drivers = data;
     });
   }
-  showPackageDetails(packageId: string): void {
-    console.log(packageId);
-    this.databaseService.getPackageById(packageId).subscribe((data: any) => {
-      this.selectedPackage = data;  
-    });
+  showPackagesForDriver(selectedDriver: any): void {
+    if (selectedDriver.assigned_packages?.length > 0) {
+      this.selectedDriverPackages = selectedDriver.assigned_packages;
+    } else {
+      this.selectedDriverPackages = [];
+      alert('No assigned packages for this driver');
+    }
   }
   deleteDriver(id: string): void {
     this.databaseService.deleteDriver(id).subscribe(() => {

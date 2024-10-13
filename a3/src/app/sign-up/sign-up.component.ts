@@ -21,6 +21,10 @@ export class SignUpComponent {
       alert('Passwords do not match');
       return;
     }
+    if (!this.isPasswordValid(this.password)) {
+      alert('Password must be at least 8 characters long, include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.');
+      return;
+    }
 
     this.authService.signup(this.username, this.password, this.confirmPassword).subscribe({
       next: () => {
@@ -32,6 +36,10 @@ export class SignUpComponent {
         alert('Username already exists or error signing up');
       },
     });
+  }
+  isPasswordValid(password: string): boolean {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
   }
 }
 
